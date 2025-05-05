@@ -124,9 +124,41 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   username: 'username',
   email: 'email',
-  pass_hash: 'pass_hash',
+  password_hash: 'password_hash',
   created_at: 'created_at',
   updated_at: 'updated_at'
+};
+
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ThreadScalarFieldEnum = {
+  id: 'id',
+  category_id: 'category_id',
+  user_id: 'user_id',
+  title: 'title',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.PostScalarFieldEnum = {
+  id: 'id',
+  thread_id: 'thread_id',
+  user_id: 'user_id',
+  content: 'content',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.LikeScalarFieldEnum = {
+  user_id: 'user_id',
+  post_id: 'post_id',
+  created_at: 'created_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -139,9 +171,18 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Category: 'Category',
+  Thread: 'Thread',
+  Post: 'Post',
+  Like: 'Like'
 };
 
 /**
