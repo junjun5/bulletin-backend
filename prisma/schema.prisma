@@ -15,10 +15,57 @@ datasource db {
 }
 
 model User {
-  id    String  @id
-	username	String
-  email String  @unique
-	pass_hash String
-	created_at DateTime
-	updated_at DateTime
+  id           Int       @id @default(autoincrement()) @map("id")
+  username     String    @unique @map("username")
+  email        String    @unique @map("email")
+  password_hash String    @map("password_hash")
+  created_at   DateTime  @default(now()) @map("created_at")
+  updated_at   DateTime  @default(now()) @updatedAt @map("updated_at")
+  thread      Thread[]
+	post        Post[]
+	like				 Like[]
+}
+model Category {
+  id          Int       @id @default(autoincrement()) @map("id")
+  name        String    @unique @map("name")
+  description String?   @map("description")
+  created_at  DateTime  @default(now()) @map("created_at")
+  updated_at  DateTime  @default(now()) @updatedAt @map("updated_at")
+  thread     Thread[]
+}
+model Thread {
+  id          Int      @id @default(autoincrement()) @map("id")
+  category_id Int      @map("category_id")
+  user_id     Int      @map("user_id")
+  title       String   @map("title")
+  created_at  DateTime @default(now()) @map("created_at")
+  updated_at  DateTime @default(now()) @updatedAt @map("updated_at")
+  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+	posts				Post[]
+
+  @@map("thread")
+}
+model Post {
+  id        Int      @id @default(autoincrement()) @map("id")
+  thread_id Int      @map("thread_id")
+  user_id   Int      @map("user_id")
+  content   String   @map("content")
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @default(now()) @updatedAt @map("updated_at")
+  thread    Thread  @relation(fields: [thread_id], references: [id], onDelete: Cascade)
+  author    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+	like			Like[]
+
+  @@map("posts")
+}
+model Like {
+  user_id    Int      @map("user_id")
+  post_id    Int      @map("post_id")
+  created_at DateTime @default(now()) @map("created_at")
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  post       Post    @relation(fields: [post_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, post_id])
+  @@map("like")
 }
