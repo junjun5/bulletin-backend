@@ -196,11 +196,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgre:BXBHHmic4RqFT694FYeN@database-2.cbgwow8u25op.us-east-1.rds.amazonaws.com:5432/bulletin?schema=SCHEMA"
+        "value": null
       }
     }
   },
