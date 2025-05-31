@@ -108,37 +108,34 @@ export class AppController {
 		return this.categoryService.deleteCategory({ id: Number(id) });
 	}
 	// Thread Controller
-	@Get("thread/:id")
-	async getThread(@Param("id") id: Number): Promise<UserModel | null> {
-		return this.userService.user({
-			id: Number(id),
+	@Get('thread/:id')
+  async getThread(@Param('id') id: Number): Promise<ThreadModel|null> {
+    return this.threadService.thread({ 
+			id: Number(id)
 		});
-	}
-	@Get("threads/:searchString")
-	async getThreadsSearch(
-		@Param("searchString") searchString: string,
-	): Promise<ThreadModel[]> {
-		return this.threadService.threads({
-			where: {
-				OR: [
-					{
-						title: { contains: searchString },
-					},
-				],
-			},
-		});
-	}
-	@Post("thread")
-	async createThread(
-		@Body() threadData: {
-			id: number;
-			title: string;
-			authoremail: string;
-			created_at: Date;
-			updated_at: Date;
-			category: string;
-		},
-	): Promise<ThreadModel> {
+  }
+  @Get('thread')
+  async getAllThreads(): Promise<ThreadModel[]> {
+    return this.threadService.threads({});
+  }
+  @Get('threads/:searchString')
+  async getThreadsSearch(
+    @Param('searchString') searchString: string,
+  ): Promise<ThreadModel[]> {
+    return this.threadService.threads({
+      where: {
+        OR: [
+          {
+            title: { contains: searchString },
+          },
+        ],
+      },
+    });
+  }
+  @Post('thread')
+  async createThread(
+    @Body() threadData: { id: number, title: string; authoremail: string; created_at: Date; updated_at: Date, category: string},
+  ): Promise<ThreadModel> {
 		const { title, authoremail, created_at, updated_at, category } = threadData;
 		return this.threadService.createThread({
 			title,
@@ -162,35 +159,39 @@ export class AppController {
 		return this.postService.post({
 			id: Number(id),
 		});
-	}
-	@Get("posts/:searchString")
-	async getpostsSearch(
-		@Param("searchString") searchString: string,
-	): Promise<PostModel[]> {
-		return this.postService.posts({
+  }
+	@Get('post')
+  async getAllPosts(): Promise<PostModel[]> {
+    return this.postService.posts({});
+  }
+	@Get('thread/:thread_id/post')
+  async getAllThreadPosts(@Param('thread_id') thread_id:Number): Promise<PostModel[]> {
+    return this.postService.posts({
 			where: {
-				OR: [
-					{
-						content: { contains: searchString },
-					},
-				],
-			},
+					thread_id: Number(thread_id)
+					}
 		});
-	}
-	@Post("post")
-	async createPost(
-		@Body() postData: {
-			id: number;
-			content: string;
-			created_at: Date;
-			updated_at: Date;
-			thread_id: number;
-			authoremail: string;
-		},
-	): Promise<PostModel> {
-		const { content, created_at, updated_at, thread_id, authoremail } =
-			postData;
-		return this.postService.createPost({
+  }
+  @Get('posts/:searchString')
+  async getpostsSearch(
+    @Param('searchString') searchString: string,
+  ): Promise<PostModel[]> {
+    return this.postService.posts({
+      where: {
+        OR: [
+          {
+            content: { contains: searchString },
+          },
+        ],
+      },
+    });
+  }
+  @Post('post')
+  async createPost(
+    @Body() postData: { id: number; content: string; created_at: Date; updated_at: Date; thread_id: number, authoremail:string},
+  ): Promise<PostModel> {
+		const { content, created_at, updated_at, thread_id, authoremail} = postData;
+    return this.postService.createPost({
 			content,
 			created_at,
 			updated_at,
