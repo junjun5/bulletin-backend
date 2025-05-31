@@ -18,6 +18,7 @@ import { Thread as ThreadModel } from 'generated/prisma';
 import { Post as PostModel } from 'generated/prisma';
 import { Like as LikeModel } from 'generated/prisma';
 import { AppService } from './app.service';
+import { CreateUserDto } from './user/dto/createUser.dto';
 
 @Controller()
 export class AppController {
@@ -60,9 +61,9 @@ export class AppController {
   }
   @Post('user')
   async signupUser(
-    @Body() userData: { id: number; username: string; email: string; password_hash: string; created_at: Date; updated_at: Date },
+    @Body() createUserDto:CreateUserDto ,
   ): Promise<UserModel> {
-    return this.userService.createUser(userData);
+    return this.userService.createUser(createUserDto);
   }
   @Delete('userdelete/:id')
   async deleteUser(@Param('id') id: string): Promise<UserModel> {

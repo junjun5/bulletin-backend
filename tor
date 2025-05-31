@@ -1,0 +1,41 @@
+[33mcommit dd8ef718c7a0113d58049c15121d0df3e797a567[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: junjun5 <jundeiiya@gmail.com>
+Date:   Sat May 31 08:43:04 2025 +0000
+
+    update app.controle which can operate thread and Post
+
+[33mcommit eaf83cf12800227496fb83ba7e902f0c7f262ad3[m
+Merge: 3ec05d1 6f79b14
+Author: Jun Hattori <33951884+junjun5@users.noreply.github.com>
+Date:   Wed May 7 23:03:23 2025 +0900
+
+    Merge pull request #2 from junjun5/prismaController
+    
+    modified prisma controller for all api
+
+[33mcommit 6f79b147515d34ef4497ce9215951be281f2f8d4[m
+Author: junjun5 <jundeiiya@gmail.com>
+Date:   Wed May 7 14:02:30 2025 +0000
+
+    modified prisma controller for all api
+
+[33mcommit 3ec05d1265c90e8ba372d5d2182500d91dbd0d79[m
+Merge: 319c8eb 46c34ed
+Author: Jun Hattori <33951884+junjun5@users.noreply.github.com>
+Date:   Mon May 5 14:59:41 2025 +0900
+
+    Merge pull request #1 from junjun5/dbSchemaDefinition
+    
+    table schema definition for prisma
+
+[33mcommit 46c34eda1508c652ccf265228ecf3a977555dfe2[m[33m ([m[1;31morigin/dbSchemaDefinition[m[33m)[m
+Author: junjun5 <jundeiiya@gmail.com>
+Date:   Mon May 5 05:58:42 2025 +0000
+
+    table schema definition for prisma
+
+[33mcommit 319c8eb0401a3cc3defeba8c151619633747a269[m
+Author: junjun5 <jundeiiya@gmail.com>
+Date:   Fri May 2 13:44:33 2025 +0000
+
+    First Commit
