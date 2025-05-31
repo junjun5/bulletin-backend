@@ -6,18 +6,18 @@ import { PrismaClient } from "../generated/prisma";
 const prisma = new PrismaClient();
 
 async function main() {
-  // const user1 = await prisma.user.create({
-  //   data: {
+	// const user1 = await prisma.user.create({
+	//   data: {
 	// 		id: "1",
 	// 		username: "junjun",
 	// 		email: 'junjun@example.com',
 	// 		pass_hash: "password",
 	// 		created_at: "2023-10-27T10:30:00+09:00",
 	// 		updated_at: "2023-10-27T10:30:00+09:00",
-  //     },
-  // });
+	//     },
+	// });
 
-  // console.log({ user1 });
+	// console.log({ user1 });
 	// const newCategory = await prisma.category.create({
 	// 	data: {
 	// 		name: "Music",
@@ -26,14 +26,14 @@ async function main() {
 	// })
 	// console.log({ newCategory })
 	// const newUser = await prisma.user.create({
-  //   data: {
-  //     username: 'newuser',
-  //     email: 'newuser@example.com',
+	//   data: {
+	//     username: 'newuser',
+	//     email: 'newuser@example.com',
 	// 		password_hash: "password!",
 	// 		}
 	// 	}
-  // );
-  // console.log({ newUser });
+	// );
+	// console.log({ newUser });
 	// const newThread = await prisma.thread.create({
 	// 	data: {
 	// 		title: "hoge",
@@ -42,7 +42,7 @@ async function main() {
 	// 		}
 	// 	}
 	// )
-  // console.log({ newThread });
+	// console.log({ newThread });
 	// const newPost = await prisma.post.create({
 	// 	data: {
 	// 		thread_id: 4,
@@ -54,16 +54,16 @@ async function main() {
 	const newLike = await prisma.like.create({
 		data: {
 			user_id: 3,
-			post_id: 4
-		}
-	})
-	console.log({ newLike })
+			post_id: 4,
+		},
+	});
+	console.log({ newLike });
 }
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+	.catch((e) => {
+		console.error(e);
+		process.exit(1);
+	})
+	.finally(async () => {
+		await prisma.$disconnect();
+	});
