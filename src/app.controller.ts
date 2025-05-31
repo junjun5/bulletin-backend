@@ -104,10 +104,14 @@ export class AppController {
   }
 	// Thread Controller
 	@Get('thread/:id')
-  async getThread(@Param('id') id: Number): Promise<UserModel|null> {
-    return this.userService.user({ 
+  async getThread(@Param('id') id: Number): Promise<ThreadModel|null> {
+    return this.threadService.thread({ 
 			id: Number(id)
 		});
+  }
+  @Get('thread')
+  async getAllThreads(): Promise<ThreadModel[]> {
+    return this.threadService.threads({});
   }
   @Get('threads/:searchString')
   async getThreadsSearch(
@@ -128,6 +132,7 @@ export class AppController {
     @Body() threadData: { id: number, title: string; authoremail: string; created_at: Date; updated_at: Date, category: string},
   ): Promise<ThreadModel> {
 		const { title, authoremail, created_at, updated_at, category } = threadData;
+		console.log(threadData);
     return this.threadService.createThread({
 			title,
 			user: {
@@ -149,6 +154,18 @@ export class AppController {
   async getPost(@Param('id') id: Number): Promise<PostModel|null> {
     return this.postService.post({ 
 			id: Number(id)
+		});
+  }
+	@Get('post')
+  async getAllPosts(): Promise<PostModel[]> {
+    return this.postService.posts({});
+  }
+	@Get('thread/:thread_id/post')
+  async getAllThreadPosts(@Param('thread_id') thread_id:Number): Promise<PostModel[]> {
+    return this.postService.posts({
+			where: {
+					thread_id: Number(thread_id)
+					}
 		});
   }
   @Get('posts/:searchString')
