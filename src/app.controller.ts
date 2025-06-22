@@ -6,6 +6,10 @@ import {
 	Body,
 	Put,
 	Delete,
+	UseGuards,
+	Request,
+	HttpCode,
+	HttpStatus,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CategoryService } from "./category.service";
@@ -19,6 +23,9 @@ import { Post as PostModel } from "generated/prisma";
 import { Like as LikeModel } from "generated/prisma";
 import { AppService } from "./app.service";
 import { CreateUserDto } from "./user/dto/createUser.dto";
+import { AuthService } from "./auth/auth.service";
+import { AuthGuard } from "./auth/auth.guard";
+import { jwtConstants, SkipAuth } from "./auth/constants";
 
 @Controller()
 export class AppController {
@@ -29,6 +36,7 @@ export class AppController {
 		private readonly threadService: ThreadService,
 		private readonly postService: PostService,
 		private readonly likeService: LikeService,
+		private readonly authService: AuthService,
 	) {}
 
 	@Get()
@@ -218,6 +226,18 @@ export class AppController {
 			},
 		});
 	}
+	@Get('post/:post_id/like')
+  async getpostLikes(@Param("post_id") post_id: number): Promise<LikeModel[]> {
+    return this.likeService.likes({
+			where: {
+				post_id: Number(post_id)
+			}
+		});
+  }
+	@Get('like')
+  async getAllLikes(): Promise<LikeModel[]> {
+    return this.likeService.likes({});
+  }
 	@Post("like")
 	async signupLike(
 		@Body() likeData: { created_at: Date; useremail: string; postid: number },
@@ -243,6 +263,29 @@ export class AppController {
 				user_id: Number(user_id),
 				post_id: Number(post_id),
 			},
+		});
+	}
+	@Post('login')
+	async validateUser(
+		@Body() validateData: { email: string, password_hash: string},
+	): Promise<UserModel> {
+		const { email, password_hash } = validateData;
+		return this.authService.validateUser(email, password_hash);
+	}
+	@SkipAuth()
+	@HttpCode(HttpStatus.OK)
+	@Post('auth/login')
+	async login(
+		@Body() validateData: { email: string, password_hash: string},
+	): Promise<{access_token: string}> {
+		const { email, password_hash } = validateData
+		return this.authService.login(email, password_hash);
+	}
+	// @UseGuards(AuthGuard)
+	@Get('auth/user/:id')
+	async authGetUser(@Param("id") id: Number): Promise<UserModel | null> {
+		return this.userService.user({
+			id: Number(id),
 		});
 	}
 }
